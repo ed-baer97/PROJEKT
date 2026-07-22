@@ -1,1 +1,3 @@
-# Ignore nothing for GitHub Pages demos
+# Large local screenshot folders — not for GitHub Pages
+/screens/
+/Снимки экрана/
