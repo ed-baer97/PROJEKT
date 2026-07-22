@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Платформа ПМ — мультиэкран</title>
+<style>
+  :root {
+    --bg: #f4f6fb; --surface: #fff; --border: #e3e8f0; --text: #1a2233;
+    --muted: #66718a; --accent: #3b5bdb; --accent-soft: #e8edff;
+    --green: #2f9e44; --green-soft: #e6f7ec; --amber: #e8930c; --amber-soft: #fff4e0;
+    --red: #d6455d; --red-soft: #fdeaee; --radius: 14px;
+    --shadow: 0 1px 3px rgba(20,30,60,.06), 0 8px 24px rgba(20,30,60,.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+  aside { width: 250px; flex-shrink: 0; background: #101830; color: #cdd6ee; display: flex; flex-direction: column; padding: 22px 14px; position: sticky; top: 0; height: 100vh; }
+  .logo { display: flex; align-items: center; gap: 10px; padding: 0 10px 22px; }
+  .logo-badge { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg,#3b5bdb,#7048e8); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 15px; }
+  .logo b { color: #fff; font-size: 15px; display: block; }
+  .logo span { font-size: 11.5px; color: #8794b8; }
+  .nav-label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #6b7899; padding: 14px 12px 6px; }
+  nav button { width: 100%; display: flex; align-items: center; gap: 11px; background: none; border: none; color: #b7c2e0; font-size: 14px; padding: 10px 12px; border-radius: 9px; cursor: pointer; text-align: left; font-family: inherit; }
+  nav button:hover { background: rgba(255,255,255,.06); color: #fff; }
+  nav button.active { background: var(--accent); color: #fff; }
+  .sidebar-foot { margin-top: auto; padding: 12px; font-size: 11.5px; color: #6b7899; line-height: 1.5; }
+  .sidebar-foot a { color: #aab4d0; }
+  main { flex: 1; padding: 28px 36px 48px; max-width: 1080px; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .topbar h1 { font-size: 21px; }
+  .topbar .sub { color: var(--muted); font-size: 13.5px; margin-top: 3px; }
+  .user { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); padding: 7px 14px 7px 8px; border-radius: 99px; box-shadow: var(--shadow); }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#f76707,#e8930c); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; }
+  .user small { color: var(--muted); display: block; font-size: 11px; }
+  .user b { font-size: 13px; }
+  .screen { display: none; }
+  .screen.active { display: block; animation: fade .25s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 22px; }
+  .stat { padding: 18px; }
+  .stat .num { font-size: 26px; font-weight: 700; margin: 6px 0 2px; }
+  .stat .lbl { font-size: 13px; color: var(--muted); }
+  .tag { font-size: 11.5px; padding: 2px 9px; border-radius: 99px; display: inline-block; }
+  .tag-blue { background: var(--accent-soft); color: var(--accent); }
+  .tag-green { background: var(--green-soft); color: var(--green); }
+  .tag-amber { background: var(--amber-soft); color: var(--amber); }
+  .modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .module { padding: 22px; cursor: pointer; transition: transform .15s; }
+  .module:hover { transform: translateY(-3px); }
+  .module h3 { font-size: 15.5px; margin: 12px 0 6px; }
+  .module p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .module .go { margin-top: 14px; font-size: 13px; color: var(--accent); font-weight: 600; }
+  .progress-row { display: flex; align-items: center; gap: 14px; padding: 13px 18px; border-top: 1px solid var(--border); font-size: 13.5px; }
+  .progress-row:first-of-type { border-top: none; }
+  .bar { flex: 1; height: 7px; background: #edf0f7; border-radius: 99px; overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+  .pct { width: 40px; text-align: right; color: var(--muted); font-size: 12.5px; }
+  .section-title { font-size: 15px; font-weight: 600; margin: 26px 0 12px; }
+  .pres-layout { display: grid; grid-template-columns: 240px 1fr; gap: 18px; }
+  .pres-list { padding: 10px; height: fit-content; }
+  .pres-item { padding: 11px 12px; border-radius: 9px; font-size: 13.5px; cursor: pointer; display: flex; gap: 9px; }
+  .pres-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .slide-wrap { overflow: hidden; }
+  .slide-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+  .ai-chip { background: linear-gradient(135deg,#e8edff,#f3edff); color: #5f3dc4; font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 99px; }
+  .slide { min-height: 340px; padding: 42px 52px; background: linear-gradient(160deg,#fff 60%,#f3f6ff); display: flex; flex-direction: column; justify-content: center; }
+  .slide .s-no { font-size: 12px; color: var(--accent); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+  .slide h2 { font-size: 24px; margin-bottom: 18px; }
+  .slide ul { list-style: none; }
+  .slide li { font-size: 15.5px; line-height: 1.65; padding-left: 26px; position: relative; margin-bottom: 10px; }
+  .slide li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  .slide .src { margin-top: 24px; font-size: 12px; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 10px; }
+  .slide-nav { display: flex; justify-content: space-between; align-items: center; padding: 13px 20px; border-top: 1px solid var(--border); }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 8px; height: 8px; border-radius: 50%; background: #d6dcea; cursor: pointer; }
+  .dots i.on { background: var(--accent); }
+  .btn { background: var(--accent); color: #fff; border: none; font-family: inherit; font-size: 13.5px; font-weight: 600; padding: 9px 18px; border-radius: 9px; cursor: pointer; }
+  .btn.ghost { background: #fff; color: var(--text); border: 1px solid var(--border); }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .q-card { padding: 20px 24px; margin-bottom: 14px; }
+  .q-card h4 { font-size: 14.5px; margin-bottom: 13px; line-height: 1.5; }
+  .q-card h4 .qn { color: var(--accent); }
+  .opt { display: flex; gap: 10px; padding: 10px 13px; border: 1px solid var(--border); border-radius: 9px; margin-bottom: 8px; font-size: 13.5px; cursor: pointer; }
+  .opt.correct { border-color: var(--green); background: var(--green-soft); }
+  .opt.wrong { border-color: var(--red); background: var(--red-soft); }
+  .opt input { accent-color: var(--accent); }
+  .test-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .test-head .meta { font-size: 13px; color: var(--muted); }
+  #test-result { display: none; padding: 18px 22px; margin-bottom: 16px; border-radius: var(--radius); font-size: 14.5px; font-weight: 600; }
+  #test-result.pass { display: block; background: var(--green-soft); color: var(--green); }
+  #test-result.fail { display: block; background: var(--amber-soft); color: var(--amber); }
+  #test-result small { display: block; font-weight: 400; color: var(--muted); margin-top: 5px; }
+  .chat-card { display: flex; flex-direction: column; height: 560px; overflow: hidden; }
+  .chat-log { flex: 1; overflow-y: auto; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+  .msg { max-width: 78%; padding: 12px 16px; border-radius: 14px; font-size: 13.8px; line-height: 1.6; }
+  .msg.user { align-self: flex-end; background: var(--accent); color: #fff; }
+  .msg.bot { align-self: flex-start; background: #f1f4fb; }
+  .msg.bot .source { margin-top: 10px; padding: 8px 11px; background: #fff; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--muted); }
+  .msg.bot .source b { color: var(--accent); }
+  .chat-hints { padding: 0 22px 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .hint { font-size: 12.5px; background: var(--accent-soft); color: var(--accent); border: none; padding: 6px 13px; border-radius: 99px; cursor: pointer; font-family: inherit; }
+  .chat-input { display: flex; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--border); }
+  .chat-input input { flex: 1; border: 1px solid var(--border); border-radius: 10px; padding: 11px 15px; font-size: 13.8px; font-family: inherit; outline: none; }
+  .drop { border: 2px dashed #c1cbe4; border-radius: var(--radius); padding: 34px; text-align: center; color: var(--muted); font-size: 14px; margin-bottom: 20px; background: #fbfcff; cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; color: var(--muted); padding: 12px 18px; border-bottom: 1px solid var(--border); }
+  td { padding: 13px 18px; border-bottom: 1px solid var(--border); }
+  .badge { font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 99px; }
+  .b-green { background: var(--green-soft); color: var(--green); }
+  .b-amber { background: var(--amber-soft); color: var(--amber); }
+  .b-blue { background: var(--accent-soft); color: var(--accent); }
+  .note { margin-top: 18px; font-size: 12.5px; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; line-height: 1.6; }
+  @media (max-width: 900px) { aside { display: none; } .stats, .modules { grid-template-columns: 1fr; } .pres-layout { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<aside>
+  <div class="logo"><div class="logo-badge">ПМ</div><div><b>Платформа ПМ</b><span>мультиэкран</span></div></div>
+  <div class="nav-label">Обучение</div>
+  <nav>
+    <button data-screen="home" class="active">⌂ Главная</button>
+    <button data-screen="pres">▤ Презентации</button>
+    <button data-screen="test">✓ Тесты</button>
+    <button data-screen="chat">💬 Чат-ассистент</button>
+  </nav>
+  <div class="nav-label">Админ</div>
+  <nav><button data-screen="admin">⇪ Материалы</button></nav>
+  <div class="sidebar-foot">Демо. <a href="index.html">← Один экран</a> · <a href="scope.md">Границы</a></div>
+</aside>
+<main>
+  <div class="topbar">
+    <div><h1 id="screen-title">Главная</h1><div class="sub" id="screen-sub">Онбординг нового ПМ</div></div>
+    <div class="user"><div class="avatar">ИН</div><div><b>Иван Новиков</b><small>ПМ · 2-я неделя</small></div></div>
+  </div>
+
+  <section class="screen active" id="screen-home">
+    <div class="stats">
+      <div class="card stat"><span class="tag tag-blue">База</span><div class="num">48</div><div class="lbl">документов</div></div>
+      <div class="card stat"><span class="tag tag-green">Обучение</span><div class="num">5 / 12</div><div class="lbl">презентаций</div></div>
+      <div class="card stat"><span class="tag tag-amber">Тесты</span><div class="num">3 / 12</div><div class="lbl">сдано</div></div>
+      <div class="card stat"><span class="tag tag-blue">Чат</span><div class="num">27</div><div class="lbl">вопросов</div></div>
+    </div>
+    <div class="modules">
+      <div class="card module" data-goto="pres"><span style="font-size:26px">▤</span><h3>ИИ-презентации</h3><p>Word → обучающие слайды.</p><div class="go">Открыть →</div></div>
+      <div class="card module" data-goto="test"><span style="font-size:26px">✓</span><h3>ИИ-тесты</h3><p>Проверка по материалам раздела.</p><div class="go">Пройти →</div></div>
+      <div class="card module" data-goto="chat"><span style="font-size:26px">💬</span><h3>Чат-ассистент</h3><p>Ответы со ссылкой на документ.</p><div class="go">Спросить →</div></div>
+    </div>
+    <div class="section-title">Прогресс</div>
+    <div class="card">
+      <div class="progress-row"><span style="width:230px">Работа с закупками</span><div class="bar"><i style="width:60%"></i></div><span class="pct">60%</span></div>
+      <div class="progress-row"><span style="width:230px">Документооборот</span><div class="bar"><i style="width:25%"></i></div><span class="pct">25%</span></div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-pres">
+    <div class="pres-layout">
+      <div class="card pres-list" id="pres-list"></div>
+      <div class="card slide-wrap">
+        <div class="slide-head"><span class="ai-chip">✦ ИИ</span><span style="font-size:12px;color:var(--muted)">по <b id="slide-doc" style="color:var(--accent)"></b></span></div>
+        <div class="slide" id="slide-body"></div>
+        <div class="slide-nav">
+          <button class="btn ghost" id="prev-slide">←</button>
+          <div class="dots" id="slide-dots"></div>
+          <button class="btn" id="next-slide">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-test">
+    <div class="test-head"><div><b>Тест: Работа с закупками</b><div class="meta">3 вопроса · сгенерированы ИИ</div></div><span class="ai-chip">✦ ИИ</span></div>
+    <div id="test-result"></div>
+    <div id="test-questions"></div>
+    <button class="btn" id="check-test">Проверить</button>
+    <button class="btn ghost" id="reset-test" style="margin-left:8px">Сбросить</button>
+  </section>
+
+  <section class="screen" id="screen-chat">
+    <div class="card chat-card">
+      <div class="chat-log" id="chat-log"><div class="msg bot">Спросите по базе — отвечу со ссылкой на документ.</div></div>
+      <div class="chat-hints">
+        <button class="hint" data-q="Как согласовать договор?">Как согласовать договор?</button>
+        <button class="hint" data-q="Сколько КП нужно?">Сколько КП нужно?</button>
+        <button class="hint" data-q="Какая погода?">Не по базе</button>
+      </div>
+      <div class="chat-input"><input id="chat-text" placeholder="Вопрос…"><button class="btn" id="chat-send">Отправить</button></div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-admin">
+    <div class="drop" id="drop">⇪ Перетащите Word-файлы (имитация)</div>
+    <div class="card"><table>
+      <thead><tr><th>Документ</th><th>Раздел</th><th>Статус</th></tr></thead>
+      <tbody id="files-tbody">
+        <tr><td>📄 Регламент закупок.docx</td><td>Закупки</td><td><span class="badge b-green">Проиндексирован</span></td></tr>
+        <tr><td>📄 Чек-лист старта.docx</td><td>Старт</td><td><span class="badge b-blue">Генерация</span></td></tr>
+        <tr><td>📄 Гос.экспертиза.docx</td><td>Экспертиза</td><td><span class="badge b-amber">Обрабатывается</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">Только Word. Видео и фаза 2 — вне границ.</div>
+  </section>
+</main>
+<script>
+const titles = { home:["Главная","Онбординг"], pres:["Презентации","ИИ по Word"], test:["Тесты","Проверка знаний"], chat:["Чат","По базе знаний"], admin:["Материалы","Загрузка Word"] };
+function show(s) {
+  document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
+  document.getElementById("screen-"+s).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b.dataset.screen===s));
+  document.getElementById("screen-title").textContent = titles[s][0];
+  document.getElementById("screen-sub").textContent = titles[s][1];
+}
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => show(b.dataset.screen));
+document.querySelectorAll(".module").forEach(m => m.onclick = () => show(m.dataset.goto));
+
+const presentations = [
+  { title:"Введение", status:"✅", doc:"Памятка.docx", slides:[{h:"Работа ПМ",pts:["От старта до сдачи","Регламенты в базе"]}] },
+  { title:"Работа с закупками", status:"▶", doc:"Регламент закупок.docx", slides:[
+    {h:"Схема закупок",pts:["Заявка по шаблону","Тендерный комитет свыше лимита","5 рабочих дней на инстанцию"]},
+    {h:"Выбор поставщика",pts:["Минимум 3 КП","Проверка СБ до подписания"]},
+    {h:"Ошибки новичков",pts:["Без заявки договор не согласуют","Не заложен резерв на комитет"]}
+  ]},
+  { title:"Документооборот", status:"○", doc:"Договоры.docx", slides:[{h:"Согласование",pts:["ПМ → юристы → финансы → директор","10 рабочих дней"]}] }
+];
+let curPres=1, curSlide=0;
+function renderPresList(){ document.getElementById("pres-list").innerHTML = presentations.map((p,i)=>`<div class="pres-item ${i===curPres?"active":""}" onclick="openPres(${i})"><span>${p.status}</span>${p.title}</div>`).join(""); }
+function renderSlide(){
+  const p=presentations[curPres], s=p.slides[curSlide];
+  document.getElementById("slide-doc").textContent=p.doc;
+  document.getElementById("slide-body").innerHTML=`<div class="s-no">Слайд ${curSlide+1}/${p.slides.length}</div><h2>${s.h}</h2><ul>${s.pts.map(t=>`<li>${t}</li>`).join("")}</ul><div class="src">Источник: ${p.doc}</div>`;
+  document.getElementById("slide-dots").innerHTML=p.slides.map((_,i)=>`<i class="${i===curSlide?"on":""}" onclick="curSlide=${i};renderSlide()"></i>`).join("");
+  document.getElementById("prev-slide").disabled=curSlide===0;
+  document.getElementById("next-slide").disabled=curSlide===p.slides.length-1;
+}
+window.openPres=i=>{curPres=i;curSlide=0;renderPresList();renderSlide();};
+document.getElementById("prev-slide").onclick=()=>{if(curSlide>0){curSlide--;renderSlide();}};
+document.getElementById("next-slide").onclick=()=>{if(curSlide<p.slides.length-1){curSlide++;renderSlide();}};
+renderPresList(); renderSlide();
+
+const questions=[
+  {q:"Минимум КП при выборе поставщика?",opts:["Одно","Три","Пять"],correct:1},
+  {q:"Когда проверка СБ?",opts:["После договора","До подписания","Только крупные"],correct:1},
+  {q:"Закупка без заявки?",opts:["Оформить позже","Договор не согласуют","Автотендер"],correct:1}
+];
+function renderTest(){
+  document.getElementById("test-questions").innerHTML=questions.map((item,qi)=>`<div class="card q-card"><h4><span class="qn">${qi+1}.</span> ${item.q}</h4>${item.opts.map((o,oi)=>`<label class="opt" data-q="${qi}" data-o="${oi}"><input type="radio" name="q${qi}" value="${oi}">${o}</label>`).join("")}</div>`).join("");
+  const r=document.getElementById("test-result"); r.className=""; r.style.display="none";
+}
+document.getElementById("check-test").onclick=()=>{
+  let score=0,answered=0;
+  questions.forEach((item,qi)=>{
+    const sel=document.querySelector(`input[name=q${qi}]:checked`);
+    document.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(l=>l.classList.remove("correct","wrong"));
+    if(!sel) return; answered++; const c=+sel.value;
+    if(c===item.correct) score++;
+    document.querySelector(`.opt[data-q="${qi}"][data-o="${item.correct}"]`).classList.add("correct");
+    if(c!==item.correct) document.querySelector(`.opt[data-q="${qi}"][data-o="${c}"]`).classList.add("wrong");
+  });
+  const r=document.getElementById("test-result");
+  if(answered<questions.length){r.className="fail";r.innerHTML="Ответьте на все вопросы";return;}
+  r.className=score===questions.length?"pass":"fail";
+  r.innerHTML=score===questions.length?`Отлично! ${score}/${questions.length}`:`Результат: ${score}/${questions.length}<small>Перечитайте презентацию</small>`;
+};
+document.getElementById("reset-test").onclick=renderTest; renderTest();
+
+const answers=[
+  {keys:["договор","соглас"],text:"Маршрут: <b>ПМ → юристы → финансы → директор</b>, ~10 рабочих дней.",src:"Договоры.docx"},
+  {keys:["кп","поставщик","три"],text:"Минимум <b>3 коммерческих предложения</b>. Проверка СБ — до подписания.",src:"Регламент закупок.docx"}
+];
+const log=document.getElementById("chat-log");
+function addMsg(cls,html){const d=document.createElement("div");d.className="msg "+cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;}
+function send(q){if(!q.trim())return;addMsg("user",q);document.getElementById("chat-text").value="";
+  setTimeout(()=>{const hit=answers.find(a=>a.keys.some(k=>q.toLowerCase().includes(k)));
+    addMsg("bot",hit?hit.text+`<div class="source">📄 <b>${hit.src}</b></div>`:"В базе ответа нет.");},700);}
+document.getElementById("chat-send").onclick=()=>send(document.getElementById("chat-text").value);
+document.getElementById("chat-text").addEventListener("keydown",e=>{if(e.key==="Enter")send(e.target.value);});
+document.querySelectorAll(".hint").forEach(h=>h.onclick=()=>send(h.dataset.q));
+document.getElementById("drop").onclick=()=>{
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td>📄 Новый документ.docx</td><td>—</td><td><span class="badge b-amber">Обрабатывается</span></td>`;
+  document.getElementById("files-tbody").prepend(tr);
+  setTimeout(()=>{tr.querySelector(".badge").className="badge b-green";tr.querySelector(".badge").textContent="Проиндексирован";},2500);
+};
+</script>
+</body>
+</html>

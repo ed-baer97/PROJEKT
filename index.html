@@ -57,6 +57,11 @@
   }
   .user small { color: #aab4d0; display: block; font-size: 10.5px; }
   .user b { font-size: 12.5px; font-weight: 600; }
+  .hdr-links { display: flex; align-items: center; gap: 14px; }
+  .hdr-links a {
+    color: #aab4d0; font-size: 12.5px; text-decoration: none;
+  }
+  .hdr-links a:hover { color: #fff; }
 
   /* Section picker */
   .section-bar {
@@ -230,12 +235,16 @@
     <div class="brand-badge">ПМ</div>
     <div>
       <b>Платформа ПМ</b>
-      <span>вариант: всё на одной странице</span>
+      <span>презентация · тест · чат</span>
     </div>
   </div>
-  <div class="user">
-    <div class="avatar">ИН</div>
-    <div><b>Иван Новиков</b><small>ПМ · 2-я неделя</small></div>
+  <div class="hdr-links">
+    <a href="demo-screens.html">Мультиэкран</a>
+    <a href="scope.md">Границы проекта</a>
+    <div class="user">
+      <div class="avatar">ИН</div>
+      <div><b>Иван Новиков</b><small>ПМ · 2-я неделя</small></div>
+    </div>
   </div>
 </header>
 
