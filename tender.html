@@ -21,83 +21,102 @@
     </div>
   </div>
   <div class="page-body">
-    <div class="learn-grid" style="grid-template-columns: 1fr 360px; min-height: 560px">
-      <!-- Слева: карточка лота -->
-      <div class="panel" style="display:flex;flex-direction:column;min-height:0;overflow:auto">
-        <div class="panel-h">
-          <h3>Карточка лота</h3>
-          <span class="ai-tag">Кейс</span>
-        </div>
-        <div style="padding:14px;display:flex;flex-direction:column;gap:12px">
-          <div class="detail-hero" style="margin:0">
-            <div class="detail-card">
-              <div>
-                <div class="bar" id="td-score">41 / 100</div>
-                <h4>Ручная проверка</h4>
-                <p style="font-size:12.5px;color:var(--muted);line-height:1.4">Лот требует ручной оценки перед участием. Скоринг предварительный.</p>
-              </div>
-              <div>
-                <div class="cap">ПОЧЕМУ СМОТРЕТЬ</div>
-                <ul>
-                  <li>Совпадение с профилем технадзора</li>
-                  <li>Сумма выше порога 50 млн тг</li>
-                </ul>
-              </div>
-              <div>
-                <div class="cap">ЧТО ПРОВЕРИТЬ</div>
-                <ul>
-                  <li>ТЗ и объём работ</li>
-                  <li>Сроки и регион</li>
-                  <li>Заказчик и история лотов</li>
-                  <li>Документы на портале</li>
-                </ul>
-              </div>
-            </div>
+    <!-- Обычная карточка лота -->
+    <div id="tender-card-view">
+      <div class="detail-hero">
+        <div class="detail-card">
+          <div>
+            <div class="bar" id="td-score">41 / 100</div>
+            <h4>Ручная проверка</h4>
+            <p style="font-size:12.5px;color:var(--muted);line-height:1.4">Лот требует ручной оценки перед участием. Скоринг предварительный.</p>
           </div>
-          <div class="kv">
-            <label>Регион</label><div id="td-region">—</div>
-            <label>Стоимость</label><div id="td-sum">—</div>
-            <label>Заказчик</label><div id="td-customer">—</div>
-            <label>Статус</label><div><span class="pill pill-amber">Проект</span></div>
-            <label>Портал</label><div>Goszakup</div>
-            <label>Срок</label><div id="td-deadline">—</div>
+          <div>
+            <div class="cap">ПОЧЕМУ СМОТРЕТЬ</div>
+            <ul>
+              <li>Совпадение с профилем технадзора</li>
+              <li>Сумма выше порога 50 млн тг</li>
+            </ul>
           </div>
-          <div class="cap">КРАТКО ПО ТЕХСПЕЦИФИКАЦИИ</div>
-          <div class="card-soft">Технический надзор за строительством / обследование объектов гражданской инфраструктуры.</div>
-          <div class="cap">ДОКУМЕНТЫ</div>
-          <div class="card-soft" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-            <span>Пакет документации на портале закупки</span>
-            <button class="btn btn-primary btn-sm" type="button">Открыть документы на портале</button>
-          </div>
-          <div class="cap">ПРОФИЛЬ ЗАКАЗЧИКА</div>
-          <div class="metrics">
-            <div class="metric"><span>ЛОТЫ</span><b>12</b></div>
-            <div class="metric"><span>СУММА</span><b>1.2 млрд</b></div>
-            <div class="metric"><span>РЕГИОН</span><b>СКО</b></div>
-          </div>
-          <div class="modal-actions" style="margin:0;padding:0;border:none">
-            <a class="btn btn-primary" id="link-calc" href="calc.html">Предварительный расчёт</a>
-            <a class="btn btn-primary" href="estimator.html">ИИ сметчик</a>
+          <div>
+            <div class="cap">ЧТО ПРОВЕРИТЬ</div>
+            <ul>
+              <li>ТЗ и объём работ</li>
+              <li>Сроки и регион</li>
+              <li>Заказчик и история лотов</li>
+              <li>Документы на портале</li>
+            </ul>
           </div>
         </div>
       </div>
+      <div class="kv">
+        <label>Регион</label><div id="td-region">—</div>
+        <label>Стоимость</label><div id="td-sum">—</div>
+        <label>Заказчик</label><div id="td-customer">—</div>
+        <label>Статус</label><div><span class="pill pill-amber">Проект</span></div>
+        <label>Портал</label><div>Goszakup</div>
+        <label>Срок</label><div id="td-deadline">—</div>
+      </div>
+      <div class="cap" style="margin:8px 0">КРАТКО ПО ТЕХСПЕЦИФИКАЦИИ</div>
+      <div class="card-soft">Технический надзор за строительством / обследование объектов гражданской инфраструктуры.</div>
+      <div class="cap" style="margin:12px 0 8px">ДОКУМЕНТЫ</div>
+      <div class="card-soft" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <span>Пакет документации на портале закупки</span>
+        <button class="btn btn-primary btn-sm" type="button">Открыть документы на портале</button>
+      </div>
+      <div class="cap" style="margin:12px 0 8px">ПРОФИЛЬ ЗАКАЗЧИКА</div>
+      <div class="metrics">
+        <div class="metric"><span>ЛОТЫ</span><b>12</b></div>
+        <div class="metric"><span>СУММА</span><b>1.2 млрд</b></div>
+        <div class="metric"><span>РЕГИОН</span><b>СКО</b></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" type="button" id="btn-case">Разобрать кейс</button>
+        <a class="btn btn-primary" id="link-calc" href="calc.html">Предварительный расчёт</a>
+        <a class="btn btn-primary" href="estimator.html">ИИ сметчик</a>
+      </div>
+    </div>
 
-      <!-- Справа: разбор кейса -->
-      <div class="panel" style="display:flex;flex-direction:column;min-height:0">
-        <div class="panel-h">
-          <h3>Разбор кейса</h3>
-          <span class="ai-tag">✦ ИИ</span>
+    <!-- Окно разбора кейса -->
+    <div id="tender-case-view" class="case-view" hidden>
+      <div class="learn-grid" style="grid-template-columns: 1fr 360px; min-height: 560px">
+        <div class="panel" style="display:flex;flex-direction:column;min-height:0">
+          <div class="panel-h">
+            <h3>Пункты кейса</h3>
+            <button class="btn btn-outline btn-sm" type="button" id="btn-case-back">← К карточке</button>
+          </div>
+
+          <div class="case-summary">
+            <div class="bar" id="td-score-case">41 / 100</div>
+            <div>
+              <div class="case-summary-title">Ручная проверка</div>
+              <div class="case-summary-meta" id="td-summary-meta">Выберите пункт — разберём в чате</div>
+            </div>
+          </div>
+
+          <div class="case-layout">
+            <div class="case-points" id="case-points"></div>
+            <div class="case-detail" id="case-detail">
+              <div class="case-detail-empty">Нажмите пункт, чтобы открыть разбор</div>
+            </div>
+          </div>
+
+          <div class="modal-actions case-actions">
+            <a class="btn btn-primary" id="link-calc-case" href="calc.html">Предварительный расчёт</a>
+            <a class="btn btn-primary" href="estimator.html">ИИ сметчик</a>
+          </div>
         </div>
-        <div class="chat-log" id="chat-log"></div>
-        <div class="chat-hints" style="padding:0 12px 8px;display:flex;flex-direction:column;gap:5px">
-          <button class="chip" type="button" data-q="Хватает ли маржи по этому лоту?">Хватает ли маржи?</button>
-          <button class="chip" type="button" data-q="Почему резерв риска 8%?">Почему резерв риска?</button>
-          <button class="chip" type="button" data-q="Как налог влияет на подачу?">Как налог влияет?</button>
-          <button class="chip" type="button" data-q="Успеем ли по срокам?">Успеем по срокам?</button>
-        </div>
-        <div class="chat-input">
-          <input id="chat-text" placeholder="Вопрос по кейсу лота…">
-          <button class="btn-icon" type="button" id="chat-send">↑</button>
+
+        <div class="panel" style="display:flex;flex-direction:column;min-height:0">
+          <div class="panel-h">
+            <h3>Разбор кейса</h3>
+            <span class="ai-tag">✦ ИИ</span>
+          </div>
+          <div class="chat-log" id="chat-log"></div>
+          <div class="chat-hints" id="chat-hints" style="padding:0 12px 8px;display:flex;flex-direction:column;gap:5px"></div>
+          <div class="chat-input">
+            <input id="chat-text" placeholder="Вопрос по открытому пункту…">
+            <button class="btn-icon" type="button" id="chat-send">↑</button>
+          </div>
         </div>
       </div>
     </div>

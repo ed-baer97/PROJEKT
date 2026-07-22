@@ -74,7 +74,7 @@ PROJEKT/
 | Тексты тендеров в таблице | `js/data.js` → `QNP.tenders` |
 | Слайды и вопросы тестов | `js/data.js` → `QNP.sections` |
 | Ответы чат-бота (обучение) | `js/data.js` → `QNP.chatAnswers` |
-| Предрасчёт и чат кейса на карточке | `js/data.js` → `QNP.calcCase`, `QNP.tenderChatAnswers` |
+| Предрасчёт и чат кейса на карточке | `js/data.js` → `QNP.calcCase`, `QNP.tenderCasePoints`, `QNP.tenderChatAnswers` |
 | Список и текст документов библиотеки | `js/data.js` → `QNP.libDocs`, `QNP.docContents` |
 | Цвета, кнопки, карточки | `css/app.css` |
 | Логика обучения | `js/learn.js` |
