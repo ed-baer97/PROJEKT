@@ -1,4 +1,4 @@
-/* Чат обучения — learn.html */
+/* Чат-бот обучения — learn.html */
 (function () {
   const log = document.getElementById("chat-log");
   if (!log) return;
@@ -33,23 +33,4 @@
   document.querySelectorAll("[data-q]").forEach((b) =>
     b.addEventListener("click", () => sendChat(b.dataset.q))
   );
-
-  const filter = document.getElementById("lib-filter-mini");
-  const list = document.getElementById("lib-list-mini");
-  const count = document.getElementById("lib-count-mini");
-
-  function renderMini() {
-    const q = (filter?.value || "").toLowerCase();
-    const docs = (QNP.libDocs || []).filter((d) => d.toLowerCase().includes(q));
-    if (count) count.textContent = `${docs.length} из ${QNP.libDocs.length} документов`;
-    if (!list) return;
-    list.innerHTML = docs
-      .map((d) => {
-        const has = (QNP.sections || []).some((s) => s.doc === d);
-        return `<a class="lib-item" href="library.html?doc=${encodeURIComponent(d)}">${d}<small>${has ? "есть презентация и тест" : "в локальной базе"}</small></a>`;
-      })
-      .join("");
-  }
-  filter?.addEventListener("input", renderMini);
-  renderMini();
 })();
