@@ -386,6 +386,7 @@ a.tender-link:hover { text-decoration: underline; }
     <div class="hdr-actions">
       <button class="btn btn-primary" data-open="estimator">ИИ сметчик</button>
       <button class="btn btn-primary" data-open="learn">Обучение</button>
+      <button class="btn btn-primary" data-open="library">Библиотека знаний</button>
       <button class="btn btn-outline" data-open="settings">Настройки поиска</button>
       <button class="btn btn-primary">Загрузить ▾</button>
     </div>
@@ -442,13 +443,64 @@ a.tender-link:hover { text-decoration: underline; }
   </div>
 </div>
 
-<!-- ===== LEARN (instead of AI Assistant) ===== -->
+<!-- ===== LEARN — чат как ИИ-ассистент ===== -->
 <div class="overlay" id="modal-learn">
   <div class="modal modal-lg">
     <div class="modal-hdr">
       <div>
         <h2>Обучение QNP</h2>
-        <p>Презентации и тесты по Word-базе · чат отвечает только по загруженным материалам · онбординг проектных менеджеров</p>
+        <p>Вопросы по тендерам, обучению, политикам компании и базе знаний</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-primary btn-sm" data-open="library">Библиотека знаний</button>
+        <button class="btn-icon" data-close>×</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="learn-grid">
+        <div class="panel" style="min-height:520px">
+          <div class="learn-top" style="padding:12px 12px 0">
+            <button class="chip" data-q="Как создать и прервать замещение в ELMA?">Как создать и прервать замещение в ELMA?</button>
+            <button class="chip" data-q="Как запустить и согласовать внутренний документ?">Как запустить и согласовать внутренний документ?</button>
+            <button class="chip" data-q="Что важно в политике качества?">Что важно в политике качества?</button>
+            <button class="chip" data-q="Как согласовать договор с подрядчиком?">Как согласовать договор с подрядчиком?</button>
+          </div>
+          <div class="chat-log" id="chat-log">
+            <div class="msg bot">Здравствуйте! Я отвечаю по загруженной базе знаний: закупки, старт проекта, документооборот, политики компании. На вопрос вне базы скажу прямо — в материалах этого нет.</div>
+          </div>
+          <div class="chat-input">
+            <input id="chat-text" placeholder="Спросите: какие риски по тендеру, что говорит политика качества…">
+            <button class="btn-icon" title="файл" style="background:#fff;color:var(--teal);border:1px solid var(--line)">📎</button>
+            <button class="btn-icon" id="chat-send">↑</button>
+          </div>
+          <div style="padding:0 14px 12px;font-size:11.5px;color:var(--muted)">Файл не выбран. До 10 МБ: PDF, Word, Excel, изображения или текст.</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>Библиотека знаний</h3>
+              <span id="lib-count-mini">документы в локальной базе</span>
+            </div>
+          </div>
+          <div class="lib-search"><input id="lib-filter-mini" placeholder="Фильтр по документам"></div>
+          <div class="lib-list" id="lib-list-mini"></div>
+          <div style="padding:10px 12px;border-top:1px solid var(--line)">
+            <button class="btn btn-primary btn-sm" style="width:100%" data-open="library">Открыть библиотеку →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LIBRARY — презентации и тесты ===== -->
+<div class="overlay" id="modal-library">
+  <div class="modal modal-lg">
+    <div class="modal-hdr">
+      <div>
+        <h2>Библиотека знаний</h2>
+        <p>Word-документы · ИИ-презентации и тесты по выбранному материалу</p>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn btn-primary btn-sm" id="jump-test">Тестирование</button>
@@ -456,13 +508,22 @@ a.tender-link:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="modal-body">
-      <div class="learn-top" id="section-chips"></div>
-      <div class="learn-grid">
+      <div class="learn-grid" style="grid-template-columns: 280px 1fr">
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>Документы</h3>
+              <span id="lib-count">0 в базе</span>
+            </div>
+          </div>
+          <div class="lib-search"><input id="lib-filter" placeholder="Фильтр по документам"></div>
+          <div class="lib-list" id="lib-list"></div>
+        </div>
+
         <div class="panel">
           <div class="tabs">
             <button class="tab active" data-ltab="pres">Презентация</button>
             <button class="tab" data-ltab="test">Тест</button>
-            <button class="tab" data-ltab="chat">Чат по материалам</button>
           </div>
           <div class="panel-h">
             <h3 id="learn-panel-title">Обучающая презентация</h3>
@@ -486,32 +547,6 @@ a.tender-link:hover { text-decoration: underline; }
               <button class="btn btn-outline btn-sm" id="reset-test">Сбросить</button>
             </div>
           </div>
-
-          <div id="ltab-chat" style="display:none;flex-direction:column;flex:1;min-height:0">
-            <div class="chat-log" id="chat-log">
-              <div class="msg bot">Здравствуйте! Я подсказываю по загруженной базе знаний. Спросите о закупках, старте проекта или документообороте — отвечу со ссылкой на документ.</div>
-            </div>
-            <div class="chat-hints">
-              <button class="chip" data-q="Сколько КП нужно для выбора поставщика?">Сколько КП нужно?</button>
-              <button class="chip" data-q="Как согласовать договор с подрядчиком?">Как согласовать договор?</button>
-              <button class="chip" data-q="Какая погода завтра?">Вопрос не по базе</button>
-            </div>
-            <div class="chat-input">
-              <input id="chat-text" placeholder="Спросите по материалам обучения…">
-              <button class="btn-icon" id="chat-send">↑</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-h">
-            <div>
-              <h3>Библиотека знаний</h3>
-              <span>Word-документы в базе проекта</span>
-            </div>
-          </div>
-          <div class="lib-search"><input id="lib-filter" placeholder="Фильтр по документам"></div>
-          <div class="lib-list" id="lib-list"></div>
         </div>
       </div>
     </div>
@@ -831,13 +866,13 @@ document.querySelectorAll("[data-tender]").forEach(a => {
 document.getElementById("open-calc").addEventListener("click", () => openModal("calc"));
 document.getElementById("td-to-estimator").addEventListener("click", () => openModal("estimator"));
 
-/* ===== Learning content ===== */
+/* ===== Learning / Library ===== */
 const sections = [
   {
     title: "Введение в процессы компании",
     doc: "Памятка нового ПМ.docx",
     slides: [
-      { h: "Как устроена работа ПМ", pts: ["ПМ ведёт проект от старта до сдачи", "Ключевые роли: руководитель, сметчик, снабжение", "Регламенты — в библиотеке знаний платформы"] },
+      { h: "Как устроена работа ПМ", pts: ["ПМ ведёт проект от старта до сдачи", "Ключевые роли: руководитель, сметчик, снабжение", "Регламенты — в библиотеке знаний"] },
       { h: "Первая неделя", pts: ["Получить доступы", "Изучить регламенты направления", "Познакомиться с командой"] }
     ],
     questions: [
@@ -905,14 +940,35 @@ const libDocs = [
 
 let curSec = 2, curSlide = 0;
 
-function renderChips() {
-  document.getElementById("section-chips").innerHTML = sections.map((s, i) =>
-    `<button class="chip ${i === curSec ? "active" : ""}" data-sec="${i}">${s.title}</button>`).join("");
-  document.querySelectorAll("[data-sec]").forEach(b => b.onclick = () => {
-    curSec = +b.dataset.sec; curSlide = 0;
-    renderChips(); renderSlide(); renderTest(); renderLib();
-  });
+function renderLibList(targetId, filterId, interactive) {
+  const q = ((document.getElementById(filterId) || {}).value || "").toLowerCase();
+  const filtered = libDocs.filter(d => d.toLowerCase().includes(q));
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  el.innerHTML = filtered.map(d => {
+    const idx = sections.findIndex(s => s.doc === d);
+    const active = interactive && idx === curSec;
+    const hasCourse = idx >= 0;
+    return `<button class="lib-item ${active ? "active" : ""}" data-doc="${d}" data-idx="${idx}">
+      ${d}<small>${hasCourse ? "есть презентация и тест" : "в локальной базе"}</small>
+    </button>`;
+  }).join("");
+  if (interactive) {
+    el.querySelectorAll(".lib-item").forEach(b => {
+      b.onclick = () => {
+        const idx = +b.dataset.idx;
+        if (idx >= 0) {
+          curSec = idx; curSlide = 0;
+          renderLibList("lib-list", "lib-filter", true);
+          renderSlide(); renderTest(); setLearnTab("pres");
+        }
+      };
+    });
+  }
+  const countEl = document.getElementById(targetId === "lib-list" ? "lib-count" : "lib-count-mini");
+  if (countEl) countEl.textContent = `${filtered.length} из ${libDocs.length} документов`;
 }
+
 function renderSlide() {
   const s = sections[curSec], sl = s.slides[curSlide];
   document.getElementById("slide-body").innerHTML =
@@ -962,41 +1018,26 @@ document.getElementById("check-test").onclick = () => {
 };
 document.getElementById("reset-test").onclick = renderTest;
 
-function renderLib() {
-  const q = (document.getElementById("lib-filter").value || "").toLowerCase();
-  document.getElementById("lib-list").innerHTML = libDocs
-    .filter(d => d.toLowerCase().includes(q))
-    .map(d => {
-      const match = sections.findIndex(s => s.doc === d || s.title.includes(d.slice(0, 12)));
-      const active = match === curSec || sections[curSec].doc === d;
-      return `<button class="lib-item ${active ? "active" : ""}" data-doc="${d}">${d}<small>${active ? "текущий раздел" : "в локальной базе"}</small></button>`;
-    }).join("");
-  document.querySelectorAll(".lib-item").forEach(b => {
-    b.onclick = () => {
-      const idx = sections.findIndex(s => s.doc === b.dataset.doc);
-      if (idx >= 0) { curSec = idx; curSlide = 0; renderChips(); renderSlide(); renderTest(); renderLib(); setLearnTab("pres"); }
-    };
-  });
-}
-document.getElementById("lib-filter").oninput = renderLib;
+document.getElementById("lib-filter").oninput = () => renderLibList("lib-list", "lib-filter", true);
+document.getElementById("lib-filter-mini").oninput = () => renderLibList("lib-list-mini", "lib-filter-mini", false);
 
 function setLearnTab(name) {
-  document.querySelectorAll(".tabs .tab").forEach(t => t.classList.toggle("active", t.dataset.ltab === name));
-  ["pres", "test", "chat"].forEach(n => {
-    const el = document.getElementById("ltab-" + n);
-    el.style.display = n === name ? "flex" : "none";
-  });
-  const titles = { pres: "Обучающая презентация", test: "Тест по разделу", chat: "Чат по загруженным материалам" };
-  document.getElementById("learn-panel-title").textContent = titles[name];
+  document.querySelectorAll("#modal-library .tab").forEach(t => t.classList.toggle("active", t.dataset.ltab === name));
+  document.getElementById("ltab-pres").style.display = name === "pres" ? "flex" : "none";
+  document.getElementById("ltab-test").style.display = name === "test" ? "flex" : "none";
+  document.getElementById("learn-panel-title").textContent =
+    name === "pres" ? "Обучающая презентация" : "Тест по разделу";
 }
-document.querySelectorAll(".tabs .tab").forEach(t => t.onclick = () => setLearnTab(t.dataset.ltab));
+document.querySelectorAll("#modal-library .tab").forEach(t => t.onclick = () => setLearnTab(t.dataset.ltab));
 document.getElementById("jump-test").onclick = () => setLearnTab("test");
 
 /* Chat */
 const answers = [
   { keys: ["кп", "поставщик", "коммерческ"], text: "Минимум <b>3 коммерческих предложения</b>. Проверка контрагента СБ — до подписания договора.", src: "Регламент закупочных процедур.docx" },
-  { keys: ["договор", "соглас", "подряд"], text: "Маршрут: <b>ПМ → юристы → финансы → директор</b>. Полный цикл — около 10 рабочих дней.", src: "Порядок согласования договоров.docx" },
-  { keys: ["старт", "запуск", "проект"], text: "На старте нужны: приказ о запуске, устав с границами, бюджет и календарный план, затем kick-off.", src: "Чек-лист старта проекта.docx" }
+  { keys: ["договор", "соглас", "подряд", "документ"], text: "Маршрут: <b>ПМ → юристы → финансы → директор</b>. Полный цикл — около 10 рабочих дней.", src: "Порядок согласования договоров.docx" },
+  { keys: ["старт", "запуск", "проект"], text: "На старте нужны: приказ о запуске, устав с границами, бюджет и календарный план, затем kick-off.", src: "Чек-лист старта проекта.docx" },
+  { keys: ["качеств", "политик"], text: "Ключевые принципы: ориентация на заказчика, непрерывное улучшение процессов, фиксация несоответствий.", src: "Политика в области качества.docx" },
+  { keys: ["elma", "замещен"], text: "В базе есть разделы по команде и управлению проектами. Откройте <b>Библиотеку знаний</b> для полного материала по ELMA.", src: "Команда и управление проектами" }
 ];
 const log = document.getElementById("chat-log");
 function addMsg(cls, html) {
@@ -1017,9 +1058,12 @@ function sendChat(q) {
 }
 document.getElementById("chat-send").onclick = () => sendChat(document.getElementById("chat-text").value);
 document.getElementById("chat-text").addEventListener("keydown", e => { if (e.key === "Enter") sendChat(e.target.value); });
-document.querySelectorAll("[data-q]").forEach(b => b.onclick = () => sendChat(b.dataset.q));
+document.querySelectorAll("#modal-learn [data-q]").forEach(b => b.onclick = () => sendChat(b.dataset.q));
 
-renderChips(); renderSlide(); renderTest(); renderLib();
+renderLibList("lib-list", "lib-filter", true);
+renderLibList("lib-list-mini", "lib-filter-mini", false);
+renderSlide();
+renderTest();
 </script>
 </body>
 </html>
