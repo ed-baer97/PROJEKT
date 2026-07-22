@@ -10,11 +10,11 @@
 <body data-page="library">
 <div class="file-hint">редактируете: library.html · js/library.js · js/data.js</div>
 
-<div class="page-shell" style="max-width:720px">
+<div class="page-shell">
   <div class="page-hdr">
     <div>
       <h2>Библиотека знаний</h2>
-      <p>Загруженные Word-документы в базе проекта</p>
+      <p>Загруженные Word-документы · слева список, справа содержимое</p>
     </div>
     <div class="page-hdr-actions">
       <a class="btn btn-outline btn-sm" href="learn.html">Обучение</a>
@@ -22,18 +22,29 @@
     </div>
   </div>
   <div class="page-body">
-    <div class="panel">
-      <div class="panel-h">
-        <div>
-          <h3>Документы</h3>
-          <span id="lib-count">0 в базе</span>
+    <div class="learn-grid" style="grid-template-columns: 300px 1fr; min-height: 560px">
+      <div class="panel">
+        <div class="panel-h">
+          <div>
+            <h3>Документы</h3>
+            <span id="lib-count">0 в базе</span>
+          </div>
+        </div>
+        <div class="lib-search"><input id="lib-filter" placeholder="Фильтр по документам"></div>
+        <div class="lib-list" id="lib-list"></div>
+      </div>
+
+      <div class="panel" style="display:flex;flex-direction:column;min-height:0">
+        <div class="panel-h">
+          <div>
+            <h3 id="doc-title">Выберите документ</h3>
+            <span id="doc-meta">содержимое появится справа</span>
+          </div>
+        </div>
+        <div id="doc-body" class="slide-box" style="flex:1;overflow:auto">
+          <p style="color:var(--muted);font-size:14px;line-height:1.6">Нажмите документ слева, чтобы открыть его текст.</p>
         </div>
       </div>
-      <div class="lib-search"><input id="lib-filter" placeholder="Фильтр по документам"></div>
-      <div class="lib-list" id="lib-list" style="max-height:none;padding-bottom:16px"></div>
-    </div>
-    <div class="note" style="margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.55;padding:12px 14px;background:#f7fbfa;border:1px solid var(--line);border-radius:12px">
-      Материалы загружаются вручную. Презентации, тесты и чат — на странице <a href="learn.html" style="color:var(--teal);font-weight:700">Обучение</a>.
     </div>
   </div>
 </div>
