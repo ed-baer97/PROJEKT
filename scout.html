@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Разведчик закупок</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="scout">
+<div class="file-hint">редактируете: scout.html</div>
+
+<div class="page-shell">
+  <div class="page-hdr">
+    <div>
+      <h2>Разведчик закупок</h2>
+      <p>Ищет годовой план закупок и сигналы по проектам на Gosexpertiza по фиксированному списку источников</p>
+    </div>
+    <div class="page-hdr-actions">
+      <a class="btn btn-outline btn-sm" href="index.html">← На главную</a>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="split">
+      <div>
+        <div class="field"><label>Направления</label>
+          <textarea>технический надзор
+обследование
+инжиниринговые услуги</textarea>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Показан сохранённый поиск: 10 источников</p>
+        <div class="stack-btns">
+          <button class="btn btn-primary" type="button">Искать годовые планы</button>
+          <button class="btn btn-primary" type="button">Искать по госэкспертизам</button>
+          <a class="btn btn-outline" href="index.html">Закрыть</a>
+        </div>
+      </div>
+      <div>
+        <div class="tabs" style="padding:0 0 10px">
+          <button class="tab active" type="button" style="background:var(--teal);color:#fff;border-radius:12px">ГПЗ</button>
+          <button class="tab" type="button" style="background:#fff;border:1px solid var(--line);border-radius:12px">Госэкспертиза</button>
+        </div>
+        <div class="card-soft">
+          <h4>Годовые планы закупок</h4>
+          <p>Мониторинг по тегам на согласованных источниках. «Весь интернет» не входит в границы.</p>
+        </div>
+        <div class="card-soft" style="border-color:#9fc4a8;background:#f0f8f2;font-size:13px;font-weight:600;color:#2f6b45">Найдено 10 источников по сохранённому профилю…</div>
+        <div class="card-soft">
+          <span class="tag">goszakup-registry</span>
+          <h4>Работы по текущему ремонту автомобильной дороги</h4>
+          <p>План закупок · регион СКО · ориентир Q3 2026 · сигнал до объявления тендера.</p>
+        </div>
+        <div class="card-soft">
+          <span class="tag">gosexpertiza</span>
+          <h4>Обследование зданий и сооружений</h4>
+          <p>Объект на госэкспертизе · потенциальный лот технадзора после прохождения экспертизы.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

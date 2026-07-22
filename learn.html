@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Обучение QNP</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="learn">
+<div class="file-hint">редактируете: learn.html · js/learn.js</div>
+
+<div class="page-shell">
+  <div class="page-hdr">
+    <div>
+      <h2>Обучение QNP</h2>
+      <p>Вопросы по тендерам, обучению, политикам компании и базе знаний</p>
+    </div>
+    <div class="page-hdr-actions">
+      <a class="btn btn-primary btn-sm" href="library.html">Библиотека знаний</a>
+      <a class="btn btn-outline btn-sm" href="index.html">← На главную</a>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="learn-grid">
+      <div class="panel" style="min-height:560px">
+        <div class="learn-top" style="padding:12px 12px 0">
+          <button class="chip" type="button" data-q="Как создать и прервать замещение в ELMA?">Как создать и прервать замещение в ELMA?</button>
+          <button class="chip" type="button" data-q="Как запустить и согласовать внутренний документ?">Как запустить и согласовать внутренний документ?</button>
+          <button class="chip" type="button" data-q="Что важно в политике качества?">Что важно в политике качества?</button>
+          <button class="chip" type="button" data-q="Как согласовать договор с подрядчиком?">Как согласовать договор с подрядчиком?</button>
+        </div>
+        <div class="chat-log" id="chat-log">
+          <div class="msg bot">Здравствуйте! Я отвечаю по загруженной базе знаний: закупки, старт проекта, документооборот, политики компании. На вопрос вне базы скажу прямо — в материалах этого нет.</div>
+        </div>
+        <div class="chat-input">
+          <input id="chat-text" placeholder="Спросите: какие риски по тендеру, что говорит политика качества…">
+          <button class="btn-icon" type="button" title="файл" style="background:#fff;color:var(--teal);border:1px solid var(--line)">📎</button>
+          <button class="btn-icon" type="button" id="chat-send">↑</button>
+        </div>
+        <div style="padding:0 14px 12px;font-size:11.5px;color:var(--muted)">Файл не выбран. До 10 МБ: PDF, Word, Excel, изображения или текст.</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">
+          <div>
+            <h3>Библиотека знаний</h3>
+            <span id="lib-count-mini">документы в локальной базе</span>
+          </div>
+        </div>
+        <div class="lib-search"><input id="lib-filter-mini" placeholder="Фильтр по документам"></div>
+        <div class="lib-list" id="lib-list-mini"></div>
+        <div style="padding:10px 12px;border-top:1px solid var(--line)">
+          <a class="btn btn-primary btn-sm" style="width:100%" href="library.html">Открыть библиотеку →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/learn.js"></script>
+</body>
+</html>

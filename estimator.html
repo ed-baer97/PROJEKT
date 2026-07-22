@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ сметчик</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="estimator">
+<div class="file-hint">редактируете: estimator.html</div>
+
+<div class="page-shell">
+  <div class="page-hdr">
+    <div>
+      <h2>ИИ сметчик</h2>
+      <p>QNP Tender+ · анализ готовых смет (Excel) и черновой расчёт</p>
+    </div>
+    <div class="page-hdr-actions">
+      <a class="btn btn-outline btn-sm" href="index.html">← На главную</a>
+    </div>
+  </div>
+  <div class="page-body">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="logo" style="background:linear-gradient(145deg,#1a4f4b,#9a8760)">ИИ</div>
+        <div>
+          <div style="font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--muted)">ПРОФЕССИОНАЛЬНАЯ ПЛАТФОРМА РАСЧЁТА</div>
+          <div style="font-weight:800;font-size:18px;color:var(--teal)">ИИ-Сметчик</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm" type="button">Формульный расчёт</button>
+        <button class="btn btn-outline btn-sm" type="button">Актуально</button>
+      </div>
+    </div>
+
+    <div class="banner-grad">
+      <div>
+        <div style="font-size:10px;font-weight:800;letter-spacing:.1em;opacity:.85">LIQUID GLASS · ТЕНДЕРНАЯ АНАЛИТИКА</div>
+        <div style="font-size:18px;font-weight:800;margin-top:6px;max-width:420px;line-height:1.3">Расчёт стоимости технадзора и обследования объектов</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="mini"><span>МИНИМУМ</span><b>4 048 113 тг</b></div>
+        <div class="mini"><span>РЕКОМЕНД.</span><b>4 755 825 тг</b></div>
+        <div class="mini"><span>С РИСКОМ</span><b>5 469 198 тг</b></div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div>
+        <div class="panel-h" style="border-radius:16px 16px 0 0;border:1px solid var(--line);border-bottom:none">
+          <h3>ВВОД · Техническое задание</h3>
+          <span class="pill" style="background:#e7f5ec;color:#2f7a4a">Готово</span>
+        </div>
+        <div class="dropzone" style="border-radius:0 0 16px 16px;border:1px solid var(--line)">
+          <div style="font-size:28px;margin-bottom:6px">⇪</div>
+          <b>PDF, DOCX, TXT, Excel</b>
+          <div style="font-size:12px;margin-top:4px">Можно выбрать несколько файлов, до 50 МБ. Сметы — Excel (фаза 2).</div>
+        </div>
+        <a class="btn btn-primary" href="calc.html" style="width:100%;margin-top:10px;border-radius:14px">Ручной расчёт</a>
+      </div>
+      <div>
+        <h3 style="font-size:14px;color:var(--teal);margin-bottom:10px">ПРОЦЕСС · От ТЗ к смете</h3>
+        <ul class="steps">
+          <li><span class="n">1</span>Собрать части ТЗ</li>
+          <li><span class="n">2</span>Уточнить параметры</li>
+          <li><span class="n">3</span>Рассчитать по формулам</li>
+        </ul>
+        <div class="note-amber">ИИ формирует черновик извлечения. Юридически значимую смету модуль не заменяет — результат для специалиста.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/nav.js"></script>
+</body>
+</html>

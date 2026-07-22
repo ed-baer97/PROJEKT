@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карточка тендера</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="tender">
+<div class="file-hint">редактируете: tender.html · js/tender.js</div>
+
+<div class="page-shell">
+  <div class="page-hdr">
+    <div>
+      <h2 id="td-title">Технический надзор</h2>
+      <p id="td-meta">номер · регион · сумма</p>
+    </div>
+    <div class="page-hdr-actions">
+      <a class="btn btn-outline btn-sm" href="index.html">← К списку</a>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="detail-hero">
+      <div class="detail-card">
+        <div>
+          <div class="bar" id="td-score">41 / 100</div>
+          <h4>Ручная проверка</h4>
+          <p style="font-size:12.5px;color:var(--muted);line-height:1.4">Лот требует ручной оценки перед участием. Скоринг предварительный.</p>
+        </div>
+        <div>
+          <div class="cap">ПОЧЕМУ СМОТРЕТЬ</div>
+          <ul>
+            <li>Совпадение с профилем технадзора</li>
+            <li>Сумма выше порога 50 млн тг</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cap">ЧТО ПРОВЕРИТЬ</div>
+          <ul>
+            <li>ТЗ и объём работ</li>
+            <li>Сроки и регион</li>
+            <li>Заказчик и история лотов</li>
+            <li>Документы на портале</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="kv">
+      <label>Регион</label><div id="td-region">—</div>
+      <label>Стоимость</label><div id="td-sum">—</div>
+      <label>Заказчик</label><div id="td-customer">—</div>
+      <label>Статус</label><div><span class="pill pill-amber">Проект</span></div>
+      <label>Портал</label><div>Goszakup</div>
+      <label>Срок</label><div id="td-deadline">—</div>
+    </div>
+    <div class="cap" style="margin:8px 0">КРАТКО ПО ТЕХСПЕЦИФИКАЦИИ</div>
+    <div class="card-soft">Технический надзор за строительством / обследование объектов гражданской инфраструктуры.</div>
+    <div class="cap" style="margin:12px 0 8px">ДОКУМЕНТЫ</div>
+    <div class="card-soft" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <span>Пакет документации на портале закупки</span>
+      <button class="btn btn-primary btn-sm" type="button">Открыть документы на портале</button>
+    </div>
+    <div class="cap" style="margin:12px 0 8px">ПРОФИЛЬ ЗАКАЗЧИКА</div>
+    <div class="metrics">
+      <div class="metric"><span>ЛОТЫ</span><b>12</b></div>
+      <div class="metric"><span>СУММА</span><b>1.2 млрд</b></div>
+      <div class="metric"><span>РЕГИОН</span><b>СКО</b></div>
+    </div>
+    <div class="modal-actions">
+      <a class="btn btn-primary" id="link-calc" href="calc.html">Предварительный расчёт</a>
+      <a class="btn btn-primary" href="estimator.html">ИИ сметчик</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/tender.js"></script>
+</body>
+</html>

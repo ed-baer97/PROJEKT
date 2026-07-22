@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Предварительный расчёт</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="calc">
+<div class="file-hint">редактируете: calc.html</div>
+
+<div class="page-shell">
+  <div class="page-hdr">
+    <div>
+      <h2>ИИ сметчик</h2>
+      <p>26000424KR-1 · Северо-Казахстанская область · 161 471 489 тг</p>
+    </div>
+    <div class="page-hdr-actions">
+      <a class="btn btn-outline btn-sm" href="estimator.html">← К сметчику</a>
+      <a class="btn btn-outline btn-sm" href="index.html">На главную</a>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="split" style="grid-template-columns: 260px 1fr">
+      <div>
+        <h3 style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:10px">ПАРАМЕТРЫ РАСЧЁТА</h3>
+        <div class="field"><label>Скидка к бюджету, %</label><input value="1,5"></div>
+        <div class="field"><label>НДС / налог, %</label><input value="12"></div>
+        <div class="field"><label>Накладные, %</label><input value="9"></div>
+        <div class="field"><label>Резерв риска, %</label><input value="8"></div>
+        <div class="field"><label>Целевая маржа, %</label><input value="10"></div>
+        <button class="btn btn-primary" type="button" style="width:100%;border-radius:14px">Ручной расчёт</button>
+      </div>
+      <div>
+        <div class="metrics">
+          <div class="metric"><span>Рекомендуемая цена подачи</span><b>159 049 417 тг</b></div>
+          <div class="metric"><span>Лимит произв. затрат</span><b>103 666 138 тг</b></div>
+          <div class="metric"><span>Плановая прибыль</span><b>14 200 841 тг</b></div>
+        </div>
+        <div class="card-soft">Черновая рекомендация: подача чуть ниже бюджета тендера с учётом скидки 1,5% и целевой маржи 10%.</div>
+        <div class="kv" style="grid-template-columns: 1fr auto">
+          <label>Бюджет тендера</label><div>161 471 489 тг</div>
+          <label>Цена подачи со скидкой</label><div>159 049 417 тг</div>
+          <label>Выручка без налога</label><div>141 990 551 тг</div>
+          <label>Накладные</label><div>12 779 150 тг</div>
+          <label>Резерв риска</label><div>11 359 244 тг</div>
+          <label>Плановая прибыль</label><div>14 200 841 тг</div>
+          <label>Лимит производственных затрат</label><div>103 666 138 тг</div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary btn-sm" type="button">Копировать расчёт</button>
+          <a class="btn btn-primary btn-sm" href="tender.html">Готово</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Библиотека знаний</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="library">
+<div class="file-hint">редактируете: library.html · js/library.js · js/data.js</div>
+
+<div class="page-shell">
+  <div class="page-hdr">
+    <div>
+      <h2>Библиотека знаний</h2>
+      <p>Word-документы · ИИ-презентации и тесты по выбранному материалу</p>
+    </div>
+    <div class="page-hdr-actions">
+      <button class="btn btn-primary btn-sm" type="button" id="jump-test">Тестирование</button>
+      <a class="btn btn-outline btn-sm" href="learn.html">Обучение</a>
+      <a class="btn btn-outline btn-sm" href="index.html">← На главную</a>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="learn-grid" style="grid-template-columns: 280px 1fr; min-height: 560px">
+      <div class="panel">
+        <div class="panel-h">
+          <div>
+            <h3>Документы</h3>
+            <span id="lib-count">0 в базе</span>
+          </div>
+        </div>
+        <div class="lib-search"><input id="lib-filter" placeholder="Фильтр по документам"></div>
+        <div class="lib-list" id="lib-list"></div>
+      </div>
+
+      <div class="panel">
+        <div class="tabs">
+          <button class="tab active" type="button" data-ltab="pres">Презентация</button>
+          <button class="tab" type="button" data-ltab="test">Тест</button>
+        </div>
+        <div class="panel-h">
+          <h3 id="learn-panel-title">Обучающая презентация</h3>
+          <span class="ai-tag">✦ Сгенерировано ИИ</span>
+        </div>
+
+        <div id="ltab-pres" style="display:flex;flex-direction:column;flex:1;min-height:0">
+          <div class="slide-box" id="slide-body"></div>
+          <div class="slide-nav">
+            <button class="btn btn-outline btn-sm" type="button" id="prev-slide">← Назад</button>
+            <div class="dots" id="slide-dots"></div>
+            <button class="btn btn-primary btn-sm" type="button" id="next-slide">Далее →</button>
+          </div>
+        </div>
+
+        <div id="ltab-test" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:auto">
+          <div id="learn-result"></div>
+          <div id="test-questions"></div>
+          <div style="padding:12px 16px;display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" type="button" id="check-test">Проверить ответы</button>
+            <button class="btn btn-outline btn-sm" type="button" id="reset-test">Сбросить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/library.js"></script>
+</body>
+</html>

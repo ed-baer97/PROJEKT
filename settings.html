@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Настройки поиска</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="settings">
+<div class="file-hint">редактируете: settings.html</div>
+
+<div class="page-shell" style="max-width:720px">
+  <div class="page-hdr">
+    <div>
+      <h2>Настройки поиска</h2>
+      <p>QNP Tender+</p>
+    </div>
+    <div class="page-hdr-actions">
+      <a class="btn btn-outline btn-sm" href="index.html">← На главную</a>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="field"><label>Ключевые слова</label>
+      <textarea>технический надзор
+технадзор
+обследование
+инжиниринговые услуги</textarea>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>Стоимость от, тг</label><input value="50000000"></div>
+      <div class="field"><label>Стоимость до, тг</label><input></div>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>Срок от</label><input type="date"></div>
+      <div class="field"><label>Срок до</label><input type="date"></div>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>Регионы</label><textarea style="min-height:60px"></textarea></div>
+      <div class="field"><label>Статусы</label><textarea style="min-height:60px"></textarea></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary btn-sm" type="button">Экспорт JSON</button>
+      <button class="btn btn-outline btn-sm" type="button">Сбросить</button>
+      <button class="btn btn-primary btn-sm" type="button">Сохранить</button>
+      <a class="btn btn-primary btn-sm" href="index.html">Обновить</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
